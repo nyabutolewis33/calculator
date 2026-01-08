@@ -66,3 +66,4 @@ jobs:
       with:
         files: artifacts/**/*
         generate_release_notes: true
+  # ... rest of workflow
