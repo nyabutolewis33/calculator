@@ -21,7 +21,7 @@ def apply_operation(nums, op):
         return reduce(lambda x, y: x ** y, nums)
     raise ValueError(f"Unsupported operation: {op}")
 
-def calculate():
+def calculate(op):
     nums_str = entry_nums.get().strip()
     if not nums_str:
         messagebox.showerror("Error", "No numbers entered.")
@@ -34,7 +34,6 @@ def calculate():
         messagebox.showerror("Error", "Invalid number entered. Please enter numeric values.")
         return
 
-    op = combo_op.get()
     try:
         result = apply_operation(nums, op)
     except ZeroDivisionError:
@@ -48,19 +47,23 @@ def calculate():
 
 root = tk.Tk()
 root.title("Simple Calculator")
-root.geometry("400x250")
+root.geometry("400x300")
 
 tk.Label(root, text="Enter numbers (space or comma separated):").pack(pady=5)
 entry_nums = tk.Entry(root, width=50)
 entry_nums.pack(pady=5)
 
-tk.Label(root, text="Operation:").pack(pady=5)
-combo_op = ttk.Combobox(root, values=['+', '-', '*', '/', '%', '//', '**'], state='readonly')
-combo_op.pack(pady=5)
+tk.Label(root, text="Choose operation:").pack(pady=5)
 
-tk.Button(root, text="Calculate", command=calculate).pack(pady=10)
+# Operation buttons
+button_frame = tk.Frame(root)
+button_frame.pack(pady=5)
+
+ops = ['+', '-', '*', '/', '%', '//', '**']
+for op in ops:
+    tk.Button(button_frame, text=op, command=lambda o=op: calculate(o)).pack(side=tk.LEFT, padx=5)
 
 label_result = tk.Label(root, text="Result: ")
-label_result.pack(pady=5)
+label_result.pack(pady=10)
 
 root.mainloop()
